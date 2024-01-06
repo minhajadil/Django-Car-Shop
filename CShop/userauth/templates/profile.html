@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block content %}
+
+{% load crispy_forms_tags %}
+
+
+{% if messages %}
+    {% for message in messages %}
+   <h1 class="text-success  ">{{message}}</h1>
+
+    {% endfor %}
+
+{% endif %}
+<div class="text-center">
+  <h1>Welcome {{user}}</h1> 
+ 
+
+  <div class ="p-5">
+    <a class='btn btn-warning ' href="{%url 'passchange1' %}"> Change Password using Old one </a>
+    <a class='btn btn-warning ' href="{%url 'passchange2' %}"> Change Password without Old one </a>
+    <a class='btn btn-warning ' href="{%url 'changedata' user.id %}"> Change Profile data </a>
+  
+  
+  </div>
+  
+
+
+
+  </div>
+
+
+
+
+
+<div class=" p-2 w-100   bg-body-secondary  ">
+  <div class="text-center">
+      <h1 class="mb-4 pt-5 ">Bought Cars</h1>
+      <h4 class='px-3 '>Total :{{user.bought_cars.all| length}}</h4>
+
+
+
+      </div>
+
+
+      <div class="">
+        
+          
+          <div class="d-flex flex-wrap pt-5">
+            {% for car in user.bought_cars.all %}
+            <div class="col-sm-3">
+              <div class="card m-2">
+                <div class="card-body">
+                  <img src="{{car.image.url}}" class="card-img-top" ,style="max-width:100%; max_height:100px" alt="...">
+                  <h5 class="card-title"><a href="{% url 'details' car.id %}" class="text-decoration-none text-dark">{{car.name}}</a></h5>
+                  
+                  <p class='text-bg-dark  '>Brand : {{car.brand}}</p>
+                  <h5>
+                      Price : {{car.price}}
+                  </h5>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+
+
+{% endblock content %}

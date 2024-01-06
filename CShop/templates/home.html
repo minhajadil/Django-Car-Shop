@@ -1,0 +1,86 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block style %}
+
+<link rel="stylesheet" href="{% static "home/style.css" %}" > 
+
+{% endblock style %}
+
+
+
+
+
+{% block content %}
+
+
+
+{% load crispy_forms_tags %} 
+{% if messages %} 
+{% for message in messages %}
+<h1 class="text-success">{{message}}</h1>
+
+{% endfor %} 
+
+{% endif %} 
+
+
+
+
+<div class="d-flex align-items-center justify-content-center bg-body-secondary  ">
+  
+    <h1 class="bg-text-white-50 p-4 ">Welcome to CShop – Where Automotive Dreams Take the Wheel!</h1>
+
+    <img class="image" src="{% static "home/homecar1.jpg" %} " alt="">
+
+
+</div>
+
+<div class=" p-2 w-100   bg-body-secondary  ">
+    <div class="text-center">
+        <h1 class="mb-4 pt-5 ">Available Cars</h1>
+
+
+        <div class='d-flex gap-2 align-items-center justify-content-center  ' > 
+            <a class='btn btn-primary ' href="{% url 'homepage'%}"> All</a>
+            {% for brand in brands %}
+            <a class='btn btn-primary ' href="{% url 'brandfilter' brand.slug %}"> {{brand.name}}</a>
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="">
+            <h4 class='px-3 '>{{data | length}} results found</h4>
+            <div class="d-flex flex-wrap pt-5">
+              {% for car in data %}
+              <div class="col-sm-3">
+                <div class="card m-2">
+                  <div class="card-body">
+                    <img src="{{car.image.url}}" class="card-img-top" ,style="max-width:100%; max_height:100px" alt="...">
+                    <h5 class="card-title"><a href="{% url 'details' car.id %}" class="text-decoration-none text-dark">{{car.name}}</a></h5>
+                    <p class="card-text">{{car.description |truncatewords:20}}</p>
+                    <p class='text-bg-dark  '>Brand : {{car.brand}}</p>
+                    <h5>
+                        Price : {{car.price}} $
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
